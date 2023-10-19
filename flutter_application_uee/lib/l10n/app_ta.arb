@@ -1,0 +1,6 @@
+{
+  "language": "தமிழ்",
+  "helloWorld": "வணக்கம் உலகம்!",
+  "multiLanguage": "பல மொழி",
+  "hello": "வணக்கம் {username}"
+}
