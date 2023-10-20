@@ -17,8 +17,8 @@ class _StartPageState extends State<StartPage> {
   void navigateToUserLogin() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        // builder: (context) => const AuthPage(),
-        builder: (context) => const PetServicesPage(),
+        builder: (context) => const AuthPage(),
+        // builder: (context) => const PetServicesPage(),
       ),
     );
   }
