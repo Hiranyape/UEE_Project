@@ -5,8 +5,14 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _collection = _firestore.collection("PetShop");
 
 class FirebaseCrud {
-  static Future<Response> addPetShop(String name, String address,
-      String contact, String website, String location) async {
+  static Future<Response> addPetShop(
+    String name,
+    String address,
+    String contact,
+    String website,
+    double latitude,
+    double longitude,
+  ) async {
     Response response = Response();
     DocumentReference documentReference = _collection.doc();
 
@@ -15,7 +21,10 @@ class FirebaseCrud {
       "address": address,
       "contact": contact,
       "website": website,
-      "location": location,
+      "location": {
+        "latitude": latitude,
+        "longitude": longitude,
+      },
     };
 
     await documentReference.set(data).whenComplete(() {
@@ -49,8 +58,15 @@ class FirebaseCrud {
     return response;
   }
 
-  static Future<Response> updatePetShop(String docId, String name,
-      String address, String contact, String website, String location) async {
+  static Future<Response> updatePetShop(
+    String docId,
+    String name,
+    String address,
+    String contact,
+    String website,
+    double latitude,
+    double longitude,
+  ) async {
     Response response = Response();
     DocumentReference documentReference = _collection.doc(docId);
 
@@ -59,7 +75,10 @@ class FirebaseCrud {
       "address": address,
       "contact": contact,
       "website": website,
-      "location": location,
+      "location": {
+        "latitude": latitude,
+        "longitude": longitude,
+      },
     };
 
     await documentReference.update(data).whenComplete(() {

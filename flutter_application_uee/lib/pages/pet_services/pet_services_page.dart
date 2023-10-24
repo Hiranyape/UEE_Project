@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_shop_map.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_shop_single_page.dart';
 import 'package:flutter_application_uee/pages/pet_services/pet_shop_view_page.dart';
 
 class PetServicesPage extends StatefulWidget {

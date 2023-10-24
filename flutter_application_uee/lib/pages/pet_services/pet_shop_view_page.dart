@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_shop_bookmarks.dart';
 import 'package:flutter_application_uee/pages/pet_services/pet_shop_search_page.dart';
 
 class PetShopViewPage extends StatefulWidget {
@@ -14,6 +15,14 @@ class _PetShopViewPageState extends State<PetShopViewPage> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const PetShopSearchPage(),
+      ),
+    );
+  }
+
+  void navigateToPetBookmarksPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const PetShopBookmarksPage(),
       ),
     );
   }
@@ -37,7 +46,15 @@ class _PetShopViewPageState extends State<PetShopViewPage> {
                     child: MyButton(
                         onTap: navigateToPetShopSearchPage,
                         text: 'Search Pet Stores'),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Center(
+                    child: MyButton(
+                        onTap: navigateToPetBookmarksPage,
+                        text: 'Pet Shop Bookmarks'),
+                  ),
                 ],
               ),
             ),
