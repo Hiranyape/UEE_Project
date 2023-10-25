@@ -1,20 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
 import 'package:flutter_application_uee/components/text_feild.dart';
 
 
-class UserLoginPage extends StatefulWidget{
+class FosterLoginPage extends StatefulWidget{
   final Function()? onTap;
-  const UserLoginPage({super.key, required this.onTap});
+  const FosterLoginPage({super.key, required this.onTap});
 
   @override
-  State<UserLoginPage> createState() =>_UserLoginPageState();
-
+  State<FosterLoginPage> createState() =>_FosterLoginPageState();
 }
-
-class _UserLoginPageState extends State<UserLoginPage>{
-
+class _FosterLoginPageState extends State<FosterLoginPage>{
   //text editing controller 
   final emailTextController = TextEditingController();
   final passwordController = TextEditingController();
@@ -24,18 +22,22 @@ class _UserLoginPageState extends State<UserLoginPage>{
     showDialog(context: (context), builder: (context)=>const Center(
       child:CircularProgressIndicator(),
     ));
-    //try sign In
-    try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailTextController.text, password: passwordController.text);
-      
-      //pop loading circle
-      if(context.mounted) Navigator.pop(context);
-    }on FirebaseAuthException catch(e){
-      //pop loading circle 
-      Navigator.pop(context);
-      //display error message
-     displayMessage(e.code);
-    }
+
+    try {
+    final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailTextController.text,
+      password: passwordController.text,
+    );
+
+    final userEmail = userCredential.user?.email;
+
+    final userSnapshot = await FirebaseFirestore.instance.collection("users").doc(userEmail).get();
+    final userRole = userSnapshot["role"];
+    if (context.mounted) Navigator.pop(context);
+  } on FirebaseAuthException catch (e) {
+    Navigator.pop(context);
+    displayMessage(e.code);
+  }
   }
 
   void displayMessage(String message){
@@ -112,13 +114,6 @@ class _UserLoginPageState extends State<UserLoginPage>{
         const SizedBox(height: 25),
 
         MyButton(onTap: signIn, text: 'Sign In'),
-
-        
-
-       
-
-
-
 
       ],)
     )))));

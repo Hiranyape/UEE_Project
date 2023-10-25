@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
 import 'package:flutter_application_uee/components/text_feild.dart';
 
-class UserRegisterPage extends StatefulWidget{
+class FosterRegisterPage extends StatefulWidget{
   final Function()? onTap;
-  const UserRegisterPage({super.key,required this.onTap });
+  const FosterRegisterPage({super.key,required this.onTap });
 
   @override
-  State<UserRegisterPage> createState() =>_UserRegisterPageState();
+  State<FosterRegisterPage> createState() =>_FosterRegisterPageState();
 
 }
 
-class _UserRegisterPageState extends State<UserRegisterPage>{
+class _FosterRegisterPageState extends State<FosterRegisterPage>{
   final usernameController = TextEditingController();
   final contactController = TextEditingController();
   final emailTextController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-
+  
   //sign user up 
 
   void signUp() async{
@@ -43,26 +43,14 @@ class _UserRegisterPageState extends State<UserRegisterPage>{
 
     await FirebaseFirestore.instance.collection("users").doc(emailTextController.text).set({
       "email":emailTextController.text,
-      "role": "User", 
+      "role": "Foster", 
     });
     }on FirebaseAuthException catch(e){
      Navigator.pop(context);
      displayMessage(e.code);
     }
-
-    try{
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailTextController.text, password: 
-      passwordController.text);
-    }on FirebaseAuthException catch(e){
-      //pop loading circle 
-      Navigator.pop(context);
-      //display error message
-     displayMessage(e.code);
-    }
-
   }
 
-  //display a dialog message
   void displayMessage(String message){
     showDialog(context: context, builder: (context) => AlertDialog(
       title: Text(message),
@@ -85,7 +73,7 @@ class _UserRegisterPageState extends State<UserRegisterPage>{
          const SizedBox(height: 10),
 
         const Align(
-        alignment: Alignment.centerLeft, // Align only this text to the left
+        alignment: Alignment.centerLeft, 
         child: Text(
           "Create New\nAccount",
           style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
