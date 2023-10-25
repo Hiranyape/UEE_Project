@@ -1,11 +1,10 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/pages/add_foster_journey.dart';
 import 'package:flutter_application_uee/pages/my_fosters_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_services_page.dart';
 import 'package:flutter_application_uee/pages/register_my_pet.dart';
-
 
 class FosterHomePage extends StatefulWidget {
   const FosterHomePage({super.key});
@@ -15,16 +14,26 @@ class FosterHomePage extends StatefulWidget {
 }
 
 class _FosterHomePageState extends State<FosterHomePage> {
-  
   // Sign user out
   void signOut() {
     FirebaseAuth.instance.signOut();
   }
 
-   void navigateToMyFosterPage() {
+  void navigateToMyFosterPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MyFosterPage()), // Instantiate your AddFosterJorney widget here.
+      MaterialPageRoute(
+          builder: (context) =>
+              MyFosterPage()), // Instantiate your AddFosterJorney widget here.
+    );
+  }
+
+  void navigateToPetServicesPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              PetServicesPage()), // Instantiate your AddFosterJorney widget here.
     );
   }
 
@@ -54,66 +63,68 @@ class _FosterHomePageState extends State<FosterHomePage> {
                 children: [
                   const SizedBox(height: 60),
                   GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return const MyFosterPage();
-                        },
-                      ),
-                    );
-                  },
-                  child : Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xFFECEFFD),
-                    borderRadius: BorderRadius.circular(15.0),
-                    boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2), 
-                      offset: Offset(0, 4), 
-                      blurRadius: 4, 
-                    ),
-                  ],
-                  ),
-                  width: 380,
-                  height: 140, 
-                  child: Stack(
-                    alignment: Alignment.bottomRight, 
-                    children: [
-                      OverflowBox(
-                        maxHeight: double.infinity,
-                        minHeight: 0,
-                        alignment: Alignment(0, 0.6),
-                        child: Image.asset('assets/images/dog3.png', width: 370, height: 170, fit: BoxFit.cover),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10), 
-                        child: const Text(
-                          "My Fosters",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const MyFosterPage();
+                            },
                           ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xFFECEFFD),
+                          borderRadius: BorderRadius.circular(15.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              offset: Offset(0, 4),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                )),
+                        width: 380,
+                        height: 140,
+                        child: Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            OverflowBox(
+                              maxHeight: double.infinity,
+                              minHeight: 0,
+                              alignment: Alignment(0, 0.6),
+                              child: Image.asset('assets/images/dog3.png',
+                                  width: 370, height: 170, fit: BoxFit.cover),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              child: const Text(
+                                "My Fosters",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
                   const SizedBox(height: 20),
                   const Row(
                     children: [
                       Text(
                         "Fosters",
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(width: 230), 
+                      SizedBox(width: 230),
                       Text(
                         "See All",
                         style: TextStyle(
-                          fontSize: 16, 
-                          color: Colors.blue, 
+                          fontSize: 16,
+                          color: Colors.blue,
                         ),
                       ),
                     ],
@@ -123,7 +134,8 @@ class _FosterHomePageState extends State<FosterHomePage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Reminders",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -132,86 +144,30 @@ class _FosterHomePageState extends State<FosterHomePage> {
                       color: Color(0xFFEDF6FB),
                       borderRadius: BorderRadius.circular(15.0),
                       boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2), 
-                        offset: Offset(0, 4),
-                        blurRadius: 4, 
-                      ),
-                    ],
-                    ),
-                    width: 380,
-                    height: 120,
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        OverflowBox(
-                        maxHeight: double.infinity,
-                        minHeight: 0,
-                        alignment: Alignment(-1.0, 1.0),
-                        child: Image.asset('assets/images/cat1.png', width: 150, height: 150, fit: BoxFit.cover),
-                      ),
-                        const Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Text(
-                          "Check your\nreminders ",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          offset: Offset(0, 4),
+                          blurRadius: 4,
                         ),
-                      ),
-                      // Arrow icon at the bottom-right corner
-                      const Positioned(
-                        bottom: 10,
-                        right: 10,
-                        child: Icon(
-                          Icons.arrow_forward,
-                          color: Colors.black,
-                          size: 24,
-                        ),
-                      ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Pet Food Stores",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(height: 50),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEDF6FB),
-                      borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2), 
-                        offset: Offset(0, 4),
-                        blurRadius: 4, 
-                      ),
-                    ],
-                    ),
                     width: 380,
                     height: 120,
                     child: Stack(
                       alignment: Alignment.bottomRight,
                       children: [
                         OverflowBox(
-                        maxHeight: double.infinity,
-                        minHeight: 0,
-                        alignment: const Alignment(-1.0, 0.8),
-                        child: Image.asset('assets/images/food1.png', width: 150, height: 150, fit: BoxFit.cover),
-                      ),
+                          maxHeight: double.infinity,
+                          minHeight: 0,
+                          alignment: Alignment(-1.0, 1.0),
+                          child: Image.asset('assets/images/cat1.png',
+                              width: 150, height: 150, fit: BoxFit.cover),
+                        ),
                         const Positioned(
                           top: 10,
                           right: 10,
                           child: Text(
-                            "Find pet food \nstores ",
+                            "Check your\nreminders ",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -227,6 +183,70 @@ class _FosterHomePageState extends State<FosterHomePage> {
                             Icons.arrow_forward,
                             color: Colors.black,
                             size: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Pet Food Stores",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDF6FB),
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          offset: Offset(0, 4),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                    width: 380,
+                    height: 120,
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        OverflowBox(
+                          maxHeight: double.infinity,
+                          minHeight: 0,
+                          alignment: const Alignment(-1.0, 0.8),
+                          child: Image.asset('assets/images/food1.png',
+                              width: 150, height: 150, fit: BoxFit.cover),
+                        ),
+                        const Positioned(
+                          top: 10,
+                          right: 10,
+                          child: Text(
+                            "Find pet food \nstores ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        // Arrow icon at the bottom-right corner
+                        Positioned(
+                          bottom: 10,
+                          right: 10,
+                          child: GestureDetector(
+                            onTap: () {
+                              navigateToPetServicesPage();
+                            },
+                            child: const Icon(
+                              Icons.arrow_forward,
+                              color: Colors.black,
+                              size: 24,
+                            ),
                           ),
                         ),
                       ],
