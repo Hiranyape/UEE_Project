@@ -40,6 +40,11 @@ dependencies:
   # Firebase 
   firebase_core: ^2.17.0
   firebase_auth: ^4.10.1
+  cloud_firestore: ^4.10.0
+  image_picker: ^1.0.4
+  cloudinary_flutter: ^1.0.0
+  cloudinary_url_gen: ^1.1.0
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:
