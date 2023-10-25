@@ -1,23 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_services_backend.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_shop_single_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/vet_clinics/vet_clinic_backend.dart';
+import 'package:flutter_application_uee/pages/pet_services/vet_clinics/vet_clinics_single_page.dart';
 
-class PetShopBookmarksPage extends StatefulWidget {
-  const PetShopBookmarksPage({super.key});
+class VetClinicBookmarksPage extends StatefulWidget {
+  const VetClinicBookmarksPage({super.key});
 
   @override
-  State<PetShopBookmarksPage> createState() => _PetShopBookmarksPageState();
+  State<VetClinicBookmarksPage> createState() => _VetClinicBookmarksPageState();
 }
 
-class _PetShopBookmarksPageState extends State<PetShopBookmarksPage> {
-  final Stream<QuerySnapshot> collectionReference = FirebaseCrud.getPetShops();
+class _VetClinicBookmarksPageState extends State<VetClinicBookmarksPage> {
+  final Stream<QuerySnapshot> collectionReference =
+      FirebaseCrudVetClinic.getVetClinics();
 
-  void navigateToPetShopSinglePage(String documentId) {
+  void navigateToVetClinicSinglePage(String documentId) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => PetShopSinglePage(documentId: documentId),
+        builder: (context) => VetClinicSinglePage(documentId: documentId),
       ),
     );
   }
@@ -37,11 +38,11 @@ class _PetShopBookmarksPageState extends State<PetShopBookmarksPage> {
                   SizedBox(
                     height: 25,
                   ),
-                  for (var petShop in snapshot.data!.docs)
+                  for (var vetClinic in snapshot.data!.docs)
                     GestureDetector(
                       onTap: () {
                         // Pass the document ID to the navigation function
-                        navigateToPetShopSinglePage(petShop.id);
+                        navigateToVetClinicSinglePage(vetClinic.id);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -50,7 +51,7 @@ class _PetShopBookmarksPageState extends State<PetShopBookmarksPage> {
                         ),
                         margin: EdgeInsets.all(8.0),
                         child: ListTile(
-                          title: Text(petShop['name']),
+                          title: Text(vetClinic['name']),
                         ),
                       ),
                     ),

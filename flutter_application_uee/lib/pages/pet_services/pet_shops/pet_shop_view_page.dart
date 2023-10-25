@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_shop_bookmarks.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_shop_search_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_bookmarks.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_search_page.dart';
 
 class PetShopViewPage extends StatefulWidget {
   const PetShopViewPage({super.key});

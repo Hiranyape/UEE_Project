@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_shop_single_page.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_shop_view_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_single_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_view_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/vet_clinics/vet_clinic_view_page.dart';
 
 class PetServicesPage extends StatefulWidget {
   const PetServicesPage({super.key});
@@ -19,10 +20,10 @@ class _PetServicesPageState extends State<PetServicesPage> {
     );
   }
 
-  void navigateToPetShopMapPage() {
+  void navigateToVetClinicViewPage() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const PetShopViewPage(),
+        builder: (context) => const VetClinicViewPage(),
       ),
     );
   }
@@ -63,7 +64,7 @@ class _PetServicesPageState extends State<PetServicesPage> {
                     ),
                   ),
                   MyButton(
-                      onTap: navigateToPetShopMapPage, text: 'Pet Clinics'),
+                      onTap: navigateToVetClinicViewPage, text: 'Pet Clinics'),
                 ],
               ),
             ),

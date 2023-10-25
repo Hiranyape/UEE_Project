@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_uee/pages/pet_services/models/response.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-final CollectionReference _collection = _firestore.collection("PetShop");
+final CollectionReference _collection = _firestore.collection("VetClinic");
 
-class FirebaseCrud {
-  static Future<Response> addPetShop(
+class FirebaseCrudVetClinic {
+  static Future<Response> addVetClinic(
     String name,
     String address,
     String contact,
@@ -29,7 +29,7 @@ class FirebaseCrud {
 
     await documentReference.set(data).whenComplete(() {
       response.code = 200;
-      response.message = "PetShop added successfully!";
+      response.message = "VetClinic added successfully!";
     }).catchError((e) {
       response.code = 500;
       response.message = e;
@@ -38,18 +38,18 @@ class FirebaseCrud {
     return response;
   }
 
-  static Stream<QuerySnapshot> getPetShops() {
-    CollectionReference petShopCollection = _collection;
-    return petShopCollection.snapshots();
+  static Stream<QuerySnapshot> getVetClinics() {
+    CollectionReference vetClinicsCollection = _collection;
+    return vetClinicsCollection.snapshots();
   }
 
-  static Future<Response> deletePetShop(String docId) async {
+  static Future<Response> deleteVetClinics(String docId) async {
     Response response = Response();
     DocumentReference documentReference = _collection.doc(docId);
 
     await documentReference.delete().whenComplete(() {
       response.code = 200;
-      response.message = "PetShop deleted";
+      response.message = "VetClinic deleted";
     }).catchError((e) {
       response.code = 500;
       response.message = e;
@@ -58,7 +58,7 @@ class FirebaseCrud {
     return response;
   }
 
-  static Future<Response> updatePetShop(
+  static Future<Response> updateVetClinic(
     String docId,
     String name,
     String address,
@@ -83,7 +83,7 @@ class FirebaseCrud {
 
     await documentReference.update(data).whenComplete(() {
       response.code = 200;
-      response.message = "PetShop updated!";
+      response.message = "VetClinic updated!";
     }).catchError((e) {
       response.code = 500;
       response.message = e;
@@ -92,12 +92,13 @@ class FirebaseCrud {
     return response;
   }
 
-  static Future<DocumentSnapshot<Object?>> getPetShopById(String docId) async {
+  static Future<DocumentSnapshot<Object?>> getVetClinicById(
+      String docId) async {
     DocumentReference documentReference = _collection.doc(docId);
     return await documentReference.get();
   }
 
-  static Future<QuerySnapshot<Object?>> getPetShopByName(String name) async {
+  static Future<QuerySnapshot<Object?>> getVetClinicByName(String name) async {
     return await _collection.where("name", isEqualTo: name).get();
   }
 }

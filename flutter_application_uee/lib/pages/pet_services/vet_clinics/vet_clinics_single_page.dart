@@ -1,26 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_services_backend.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_shop_search_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_search_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/vet_clinics/vet_clinic_backend.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PetShopSinglePage extends StatefulWidget {
+class VetClinicSinglePage extends StatefulWidget {
   final String documentId;
-  PetShopSinglePage({required this.documentId});
+  VetClinicSinglePage({required this.documentId});
 
   @override
-  State<PetShopSinglePage> createState() => _PetShopSinglePageState();
+  State<VetClinicSinglePage> createState() => _VetClinicSinglePageState();
 }
 
-class _PetShopSinglePageState extends State<PetShopSinglePage> {
+class _VetClinicSinglePageState extends State<VetClinicSinglePage> {
   // Replace these placeholders with actual data
   String shopName = "";
   String address = "";
   String contactNo = "";
   String websiteLink = "";
 
-  void navigateToPetShopSearchPage() {
+  void navigateToVetClinicSearchPage() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const PetShopSearchPage(),
@@ -39,7 +39,7 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirm Deletion'),
-          content: Text('Are you sure you want to delete this pet shop?'),
+          content: Text('Are you sure you want to delete this vet clinic?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -49,7 +49,7 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
             ),
             TextButton(
               onPressed: () {
-                FirebaseCrud.deletePetShop(widget.documentId);
+                FirebaseCrudVetClinic.deleteVetClinics(widget.documentId);
                 Navigator.of(context).pop(); // Close the confirmation dialog
                 returnToPreviousPage(); // Return to the previous page
               },
@@ -65,7 +65,7 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
   void initState() {
     super.initState();
     // Fetch pet shop details by document ID
-    FirebaseCrud.getPetShopById(widget.documentId)
+    FirebaseCrudVetClinic.getVetClinicById(widget.documentId)
         .then((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
         setState(() {
@@ -188,7 +188,7 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
                       const SizedBox(
                           width: 16), // Add some space between buttons
                       ElevatedButton(
-                        onPressed: navigateToPetShopSearchPage,
+                        onPressed: navigateToVetClinicSearchPage,
                         child: const Text('View'),
                       ),
                     ],

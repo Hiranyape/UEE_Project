@@ -7,19 +7,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/pages/pet_services/location_service.dart';
 import 'package:flutter_application_uee/pages/pet_services/models/response.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_services_backend.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_backend.dart';
+import 'package:flutter_application_uee/pages/pet_services/vet_clinics/vet_clinic_backend.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class PetShopSearchPage extends StatefulWidget {
-  const PetShopSearchPage({super.key});
+class VetClinicSearchPage extends StatefulWidget {
+  const VetClinicSearchPage({super.key});
 
   @override
-  State<PetShopSearchPage> createState() => PetShopSearchPageState();
+  State<VetClinicSearchPage> createState() => VetClinicSearchPageState();
 }
 
-class PetShopSearchPageState extends State<PetShopSearchPage> {
+class VetClinicSearchPageState extends State<VetClinicSearchPage> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   TextEditingController _originController = TextEditingController();
@@ -77,15 +78,12 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
               _markers.add(_userLocationMarker);
               _goToPlace(value.latitude, value.longitude, null, null);
 
-              _getPetStores();
+              _getVetClinics();
             },
           );
         }
       },
     );
-    // _setMarker(
-    //   LatLng(37.42796133580664, -122.085749655962),
-    // );
   }
 
   void _setMarker(LatLng point, String title) {
@@ -205,43 +203,13 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
                 },
                 icon: Icon(Icons.search),
               ),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     _getPetStores();
-              //   },
-              //   child: const Text("Get Pet Store Locations"),
-              // ),
               ElevatedButton(
                 onPressed: () {
-                  _getSinglePetStoreDetailsFireBase(selectedMarkerLat,
+                  _getSingleVetClinicDetailsFireBase(selectedMarkerLat,
                       selectedMarkerLng); // Pass the lat and long from your current location
                 },
                 child: Text("Add Bookmark"),
               )
-              // IconButton(
-              //   onPressed: () {
-              //     if (!isBookmarked) {
-              //       // Add the bookmark
-              //       _getSinglePetStoreDetailsFireBase(
-              //           selectedMarkerLat, selectedMarkerLng);
-              //       setState(() {
-              //         isBookmarked = true;
-              //         bookmarkIcon = Icons.bookmark; // Icon when bookmarked
-              //       });
-              //     } else {
-              //       // Handle unbookmarking here if needed
-              //       // Remove the bookmark
-              //       // setState(() {
-              //       //   isBookmarked = false;
-              //       //   bookmarkIcon = Icons.bookmark_border; // Icon when not bookmarked
-              //       // });
-              //     }
-              //   },
-              //   icon: Icon(
-              //     bookmarkIcon,
-              //     size: 36,
-              //   ),
-              // )
             ],
           ),
           Expanded(
@@ -254,14 +222,6 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
               },
-              // onTap: (point) {
-              //   setState(() {
-              //     polygonLatLngs.add(point);
-              //     _setPolygon();
-              //     _updateDestination(
-              //         point); // Update destination when the map is tapped
-              //   });
-              // },
               onTap: _handleMapTap,
             ),
           ),
@@ -328,11 +288,11 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
     }
   }
 
-  void _getPetStores() async {
-    print("Fetching pet stores..."); // Add this line for debugging
+  void _getVetClinics() async {
+    print("Fetching vet clinics..."); // Add this line for debugging
     Position position = await _getCurrentLocation();
     LatLng origin = LatLng(position.latitude, position.longitude);
-    var results = await LocationService().fetchNearbyPetStores(origin);
+    var results = await LocationService().fetchNearbyPetClinics(origin);
     print("Results: $results"); // Add this line for debugging
     if (results != null) {
       for (var result in results) {
@@ -345,14 +305,14 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
         _setMarker(petStoreLocation, name);
       }
     } else {
-      print("No pet stores found or an error occurred.");
+      print("No vet clinics found or an error occurred.");
     }
   }
 
-  void _getSinglePetStoreDetails(double lat, double lng) async {
+  void _getSingleVetClinicDetails(double lat, double lng) async {
     Position position = await _getCurrentLocation();
     LatLng origin = LatLng(position.latitude, position.longitude);
-    var results = await LocationService().fetchNearbyPetStores(origin);
+    var results = await LocationService().fetchNearbyPetClinics(origin);
 
     for (var result in results) {
       final storeLat = result['geometry']['location']['lat'];
@@ -380,18 +340,14 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
 
         LatLng newDest = LatLng(storeLat, storeLng);
         _updateDestination(newDest);
-
-        // Add a bookmark to the Firestore database
-        // addBookmarkToFirebase(
-        //     name, address, contactNumber, website, storeLat, storeLng);
       }
     }
   }
 
-  void _getSinglePetStoreDetailsFireBase(double lat, double lng) async {
+  void _getSingleVetClinicDetailsFireBase(double lat, double lng) async {
     Position position = await _getCurrentLocation();
     LatLng origin = LatLng(position.latitude, position.longitude);
-    var results = await LocationService().fetchNearbyPetStores(origin);
+    var results = await LocationService().fetchNearbyPetClinics(origin);
 
     for (var result in results) {
       final storeLat = result['geometry']['location']['lat'];
@@ -418,16 +374,12 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
         print("Website: $website");
 
         try {
-          Response res = await FirebaseCrud.addPetShop(
+          Response res = await FirebaseCrudVetClinic.addVetClinic(
               name, address, contactNumber, website, storeLat, storeLng);
           print('Bookmark added to Firebase');
         } catch (e) {
           print('Error adding bookmark to Firebase: $e');
         }
-
-        // Add a bookmark to the Firestore database
-        // addBookmarkToFirebase(
-        //     name, address, contactNumber, website, storeLat, storeLng);
       }
     }
   }
@@ -436,35 +388,6 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
     markerId: MarkerId('null_marker'),
     position: LatLng(0, 0), // You can use any coordinates here
   );
-
-  // Future<void> addBookmarkToFirebase(
-  //   String name,
-  //   String address,
-  //   String contactNumber,
-  //   String website,
-  //   double latitude,
-  //   double longitude,
-  // ) async {
-  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  //   // Define a reference to the "bookmarks" collection
-  //   CollectionReference bookmarksCollection = firestore.collection('bookmarks');
-
-  //   try {
-  //     await bookmarksCollection.add({
-  //       'name': name,
-  //       'address': address,
-  //       'contactNumber': contactNumber,
-  //       'website': website,
-  //       'latitude': latitude,
-  //       'longitude': longitude,
-  //     });
-
-  //     print('Bookmark added to Firebase');
-  //   } catch (e) {
-  //     print('Error adding bookmark to Firebase: $e');
-  //   }
-  // }
 
   void _onMarkerTapped(MarkerId markerId) {
     // Find the selected pet store marker by its ID
@@ -479,7 +402,7 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
       selectedMarkerLng = selectedMarker.position.longitude;
 
       // Fetch details of the selected pet store using its coordinates
-      _getSinglePetStoreDetails(selectedMarkerLat, selectedMarkerLng);
+      _getSingleVetClinicDetails(selectedMarkerLat, selectedMarkerLng);
     }
   }
 
