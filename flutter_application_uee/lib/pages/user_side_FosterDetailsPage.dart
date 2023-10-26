@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_uee/pages/rating_page.dart';
 
@@ -19,6 +19,7 @@ class _FosterDetailsPageState extends State<FosterDetailsPage> {
   String sex = "";
   String about = "";
   List<String> extraPoints = [];
+  String fosterImage = ""; // Store the image URL
 
   Future<void> fetchFosterDetails() async {
     try {
@@ -35,6 +36,7 @@ class _FosterDetailsPageState extends State<FosterDetailsPage> {
           sex = fosterDoc['sex'];
           about = fosterDoc['about'];
           extraPoints = List<String>.from(fosterDoc['extra_points']);
+          fosterImage = fosterDoc['image']; // Assign the image URL
         });
       }
     } catch (e) {
@@ -110,8 +112,11 @@ class _FosterDetailsPageState extends State<FosterDetailsPage> {
             padding: const EdgeInsets.all(16.0),
             child: CircleAvatar(
               radius: 80,
-              backgroundImage: NetworkImage(
-                  "assets/images/profile_Default.jpg"), // Replace with the actual URL
+              backgroundImage: fosterImage.isNotEmpty
+                  ? NetworkImage(
+                      fosterImage) // Use the actual URL from Firestore
+                  : AssetImage('assets/images/profile_Default.jpg')
+                      as ImageProvider<Object>,
             ),
           ),
           ListTile(
