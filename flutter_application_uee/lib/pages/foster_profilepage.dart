@@ -6,6 +6,7 @@ class FosterProfilePage extends StatelessWidget {
   final String fosterEmail;
 
   FosterProfilePage({required this.fosterEmail});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class FosterProfilePage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        UpdateFosterDetailsPage(fosterEmail: fosterEmail),
+                        UpdateFosterPage(fosterEmail: fosterEmail),
                   ),
                 );
               },

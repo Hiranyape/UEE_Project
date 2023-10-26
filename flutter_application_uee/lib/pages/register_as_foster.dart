@@ -55,7 +55,7 @@ class _FosterRegistrationPageState extends State<FosterRegistrationPage> {
           extraPoints.split('\n').map((point) => point.trim()).toList();
       await fostersCollection.add({
         "user_id": userId,
-        "email": widget
+        "fosterEmail": widget
             .fosterEmail, // Use the email passed from the Foster Home page
         "image": _fosterImage != null ? _fosterImage!.path : null,
         "name": fosterName,

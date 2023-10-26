@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import "rating_page.dart";
 
 class RatingDetailsPage extends StatefulWidget {
+ 
+  final String fosterEmail; // The email of the foster you want to rate
+
+  RatingDetailsPage({ required this.fosterEmail});
+
   @override
   _RatingDetailsPageState createState() => _RatingDetailsPageState();
 }
@@ -22,6 +26,9 @@ class _RatingDetailsPageState extends State<RatingDetailsPage> {
     try {
       // Store the points in Firebase
       await firestore.collection('ratings').add({
+        'email': widget.fosterEmail, // The email of the user giving the rating
+        'fosterEmail':
+            widget.fosterEmail, // The email of the foster being rated
         'feedPoints': feedPoints,
         'medicalPoints': medicalPoints,
         'walkingPoints': walkingPoints,
@@ -48,11 +55,7 @@ class _RatingDetailsPageState extends State<RatingDetailsPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Navigate back to the rating page
-                    // Navigator.push(
-                    //   context
-                    //   // MaterialPageRoute(builder: (context) => RatingPage()),
-                    // );
+                    Navigator.pop(context); // Dismiss the dialog
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue,
