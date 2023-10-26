@@ -9,25 +9,26 @@ class LoginOrRegisterFoster extends StatefulWidget {
 
   @override
   State<LoginOrRegisterFoster> createState() => _LoginOrRegisterFoster();
-
 }
 
-class _LoginOrRegisterFoster extends State<LoginOrRegisterFoster>{
-
+class _LoginOrRegisterFoster extends State<LoginOrRegisterFoster> {
   bool showLoginPage = true;
 
-  void togglePages(){
+  void togglePages() {
     setState(() {
       showLoginPage = !showLoginPage;
     });
   }
 
-  @override 
-  Widget build(BuildContext context){
-    if(showLoginPage){
-      return FosterLoginPage(onTap :togglePages);
-    }else{
-      return FosterRegisterPage(onTap:togglePages);
+  @override
+  Widget build(BuildContext context) {
+    if (showLoginPage) {
+      return FosterLoginPage(onTap: togglePages);
+    } else {
+      return FosterRegisterPage(
+        onTap: togglePages,
+        fosterEmail: '',
+      );
     }
   }
 }
