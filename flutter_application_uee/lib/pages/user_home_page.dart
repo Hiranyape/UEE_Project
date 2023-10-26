@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_uee/pages/my_pets.dart';
 import 'package:flutter_application_uee/pages/user_side_FosterDetailsPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -196,7 +197,14 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  Container(
+                  GestureDetector(
+                  onTap: () {
+                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return MyPetsPage();
+                    }));
+                  },
+                  child: Container(
                     decoration: BoxDecoration(
                       color: Color(0xFFEDF6FB),
                       borderRadius: BorderRadius.circular(15.0),
@@ -217,8 +225,7 @@ class _HomePageState extends State<HomePage> {
                           maxHeight: double.infinity,
                           minHeight: 0,
                           alignment: Alignment(-1.0, 1.0),
-                          child: Image.asset('assets/images/dog2.png',
-                              width: 150, height: 170, fit: BoxFit.cover),
+                          child: Image.asset('assets/images/dog2.png', width: 150, height: 170, fit: BoxFit.cover),
                         ),
                         const Positioned(
                           top: 10,
@@ -244,7 +251,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                )
                 ],
               ),
             ),

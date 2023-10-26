@@ -33,7 +33,7 @@ class PetProfilePage extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: Color(0xFF0099CD),
                 ),
-                width: 380,
+                width: MediaQuery.of(context).size.width,
                 height: 140,
                 child: Stack(
                   alignment: Alignment.bottomRight,
@@ -60,40 +60,71 @@ class PetProfilePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 40),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(description),
-                    SizedBox(height: 20),
-                    const Text(
-                      "Age",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(age ?? 'N/A'),
-                    SizedBox(height: 20),
-                    const Text(
-                      "Weight",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(weight ?? 'N/A'),
-                    SizedBox(height: 20),
-                    const Text(
-                      "Breed",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(breed ?? 'N/A'),
-                    SizedBox(height: 20),
+                  Padding(
+  padding: const EdgeInsets.all(16.0),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(description),
+      SizedBox(height: 20),
+      Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Text(
+              "Age",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Text(age ?? 'N/A'),
+          ),
+        ],
+      ),
+      SizedBox(height: 20),
+      Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Text(
+              "Weight",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Text(weight ?? 'N/A'),
+          ),
+        ],
+      ),
+      SizedBox(height: 20),
+      Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Text(
+              "Breed",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Text(breed ?? 'N/A'),
+          ),
+        ],
+      ),
+      SizedBox(height: 20),
+ SizedBox(height: 20),
                    MyButton(onTap: () async {
                     Navigator.push(
                       context,
@@ -102,9 +133,9 @@ class PetProfilePage extends StatelessWidget {
                       ),
                     );
                   }, text: 'Add New Journey'),
-                  ],
-                ),
-              ),
+    ],
+  ),
+)
             ],
           ),
         ),
