@@ -6,6 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class RatingPage extends StatefulWidget {
+  final String email;
+
+  RatingPage({required this.email});
   @override
   _RatingPageState createState() => _RatingPageState();
 }
