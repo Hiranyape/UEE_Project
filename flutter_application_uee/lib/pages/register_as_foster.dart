@@ -1,22 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class FosterRegistrationPage extends StatefulWidget {
+  final String fosterEmail;
+  final String? userEmail;
+
+  FosterRegistrationPage({required this.fosterEmail, this.userEmail});
   @override
   _FosterRegistrationPageState createState() => _FosterRegistrationPageState();
 }
 
 class _FosterRegistrationPageState extends State<FosterRegistrationPage> {
-  final DatabaseReference _database = FirebaseDatabase.instance.reference();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   File? _fosterImage;
   String fosterAbout = '';
   String extraPoints = '';
   String fosterName = '';
-  int fosterAge = 0;
-  String fosterSex = ''; // Add a variable to store the selected sex.
+  String fosterAge = '';
+  String fosterSex = 'Male';
+  String? userId;
+
+  @override
+  void initState() {
+    super.initState();
+    Firebase.initializeApp();
+  }
 
   Future<void> _getImage() async {
     final pickedFile =
@@ -29,24 +43,50 @@ class _FosterRegistrationPageState extends State<FosterRegistrationPage> {
     }
   }
 
-  void submitFosterRegistration() {
-    // Store the foster registration details in Firebase or your preferred database.
-    _database.child("foster_registrations").push().set({
-      "image": _fosterImage != null ? _fosterImage?.path : null,
-      "name": fosterName,
-      "age": fosterAge,
-      "sex": fosterSex, // Use the selected sex.
-      "about": fosterAbout,
-      "extra_points": extraPoints,
-      "timestamp": ServerValue.timestamp,
-    });
+  Future<void> submitFosterRegistration() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        userId = user.uid;
+      }
 
-    // Show a confirmation message to the user using FlutterToast.
+      CollectionReference fostersCollection = _firestore.collection("fosters");
+      List<String> extraPointsList =
+          extraPoints.split('\n').map((point) => point.trim()).toList();
+      await fostersCollection.add({
+        "user_id": userId,
+        "email": widget
+            .fosterEmail, // Use the email passed from the Foster Home page
+        "image": _fosterImage != null ? _fosterImage!.path : null,
+        "name": fosterName,
+        "age": fosterAge,
+        "sex": fosterSex,
+        "about": fosterAbout,
+        "extra_points": extraPointsList,
+      });
+
+      showSuccessMessage("Foster registration submitted successfully");
+    } catch (error) {
+      showErrorMessage("Error: $error");
+    }
+  }
+
+  void showSuccessMessage(String message) {
     Fluttertoast.showToast(
-      msg: "Foster registration submitted successfully",
+      msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       backgroundColor: Color.fromARGB(255, 102, 240, 194),
+      textColor: Colors.white,
+    );
+  }
+
+  void showErrorMessage(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red,
       textColor: Colors.white,
     );
   }
@@ -97,12 +137,11 @@ class _FosterRegistrationPageState extends State<FosterRegistrationPage> {
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
                   setState(() {
-                    fosterAge = int.tryParse(value) ?? 0;
+                    fosterAge = value;
                   });
                 },
               ),
             ),
-            // Add the radio button selection for "Male" and "Female".
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -116,7 +155,7 @@ class _FosterRegistrationPageState extends State<FosterRegistrationPage> {
                         groupValue: fosterSex,
                         onChanged: (value) {
                           setState(() {
-                            fosterSex = value as String;
+                            fosterSex = "Male";
                           });
                         },
                       ),
@@ -126,7 +165,7 @@ class _FosterRegistrationPageState extends State<FosterRegistrationPage> {
                         groupValue: fosterSex,
                         onChanged: (value) {
                           setState(() {
-                            fosterSex = value as String;
+                            fosterSex = "Female";
                           });
                         },
                       ),

@@ -49,10 +49,10 @@ class _RatingDetailsPageState extends State<RatingDetailsPage> {
                 ElevatedButton(
                   onPressed: () {
                     // Navigate back to the rating page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RatingPage()),
-                    );
+                    // Navigator.push(
+                    //   context
+                    //   // MaterialPageRoute(builder: (context) => RatingPage()),
+                    // );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue,
