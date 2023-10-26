@@ -47,7 +47,7 @@ class _StartPageState extends State<StartPage> {
         child: Image(
           image: AssetImage('assets/images/startimg.jpg'),
           width: 400, 
-          height: 350, 
+          height: 300, 
           fit: BoxFit.cover, 
         ),
       ),
