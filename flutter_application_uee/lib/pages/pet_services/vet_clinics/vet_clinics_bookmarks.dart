@@ -26,6 +26,9 @@ class _VetClinicBookmarksPageState extends State<VetClinicBookmarksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Vet Clinics - Bookmarks"),
+      ),
       backgroundColor: Colors.white,
       body: StreamBuilder<QuerySnapshot>(
         stream: collectionReference,

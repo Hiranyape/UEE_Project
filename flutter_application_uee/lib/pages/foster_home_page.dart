@@ -221,58 +221,58 @@ class _FosterHomePageState extends State<FosterHomePage> {
                     ),
                   ),
                   const SizedBox(height: 50),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEDF6FB),
-                      borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          offset: Offset(0, 4),
-                          blurRadius: 4,
-                        ),
-                      ],
-                    ),
-                    width: 380,
-                    height: 120,
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        OverflowBox(
-                          maxHeight: double.infinity,
-                          minHeight: 0,
-                          alignment: const Alignment(-1.0, 0.8),
-                          child: Image.asset('assets/images/food1.png',
-                              width: 150, height: 150, fit: BoxFit.cover),
-                        ),
-                        const Positioned(
-                          top: 10,
-                          right: 10,
-                          child: Text(
-                            "Find pet food \nstores ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: () {
+                      navigateToPetServicesPage();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEDF6FB),
+                        borderRadius: BorderRadius.circular(15.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            offset: Offset(0, 4),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      width: 380,
+                      height: 120,
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          OverflowBox(
+                            maxHeight: double.infinity,
+                            minHeight: 0,
+                            alignment: const Alignment(-1.0, 0.8),
+                            child: Image.asset('assets/images/food1.png',
+                                width: 150, height: 150, fit: BoxFit.cover),
+                          ),
+                          const Positioned(
+                            top: 10,
+                            right: 10,
+                            child: Text(
+                              "Find pet food \nstores ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        // Arrow icon at the bottom-right corner
-                        Positioned(
-                          bottom: 10,
-                          right: 10,
-                          child: GestureDetector(
-                            onTap: () {
-                              navigateToPetServicesPage();
-                            },
-                            child: const Icon(
+                          // Arrow icon at the bottom-right corner
+                          const Positioned(
+                            bottom: 10,
+                            right: 10,
+                            child: Icon(
                               Icons.arrow_forward,
                               color: Colors.black,
                               size: 24,
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   // GestureDetector for adding foster details

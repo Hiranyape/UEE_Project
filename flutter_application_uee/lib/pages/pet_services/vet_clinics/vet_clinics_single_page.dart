@@ -83,6 +83,9 @@ class _VetClinicSinglePageState extends State<VetClinicSinglePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Vet Clinic"),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(

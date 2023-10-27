@@ -83,6 +83,9 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Pet Shop"),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(

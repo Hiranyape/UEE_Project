@@ -9,6 +9,7 @@ import 'package:flutter_application_uee/pages/pet_services/location_service.dart
 import 'package:flutter_application_uee/pages/pet_services/models/response.dart';
 import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_backend.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -159,7 +160,7 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Google Maps')),
+      appBar: AppBar(title: Text('Pet Food Stores')),
       body: Column(
         children: [
           Row(
@@ -167,10 +168,10 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
               Expanded(
                 child: Column(
                   children: [
-                    Text(
-                      locationMessage,
-                      textAlign: TextAlign.center,
-                    ),
+                    // Text(
+                    //   locationMessage,
+                    //   textAlign: TextAlign.center,
+                    // ),
                     TextFormField(
                       controller: _originController,
                       decoration: InputDecoration(hintText: 'Origin'),
@@ -421,8 +422,24 @@ class PetShopSearchPageState extends State<PetShopSearchPage> {
           Response res = await FirebaseCrudPetShop.addPetShop(
               name, address, contactNumber, website, storeLat, storeLng);
           print('Bookmark added to Firebase');
+          // Show a toast message with a green tick when the bookmark is added
+          Fluttertoast.showToast(
+            msg: 'Bookmark added',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+          );
         } catch (e) {
           print('Error adding bookmark to Firebase: $e');
+          // Show an error message in case of an exception
+          Fluttertoast.showToast(
+            msg: 'Error adding bookmark',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
         }
 
         // Add a bookmark to the Firestore database

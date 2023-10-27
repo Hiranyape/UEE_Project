@@ -57,9 +57,11 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
           email: emailTextController.text, password: passwordController.text);
     } on FirebaseAuthException catch (e) {
       //pop loading circle
-      Navigator.pop(context);
-      //display error message
-      displayMessage(e.code);
+      if (mounted) {
+        Navigator.pop(context);
+        //display error message
+        displayMessage(e.code);
+      }
     }
   }
 
