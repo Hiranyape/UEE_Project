@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_uee/pages/pet_services/location_service.dart';
 import 'package:flutter_application_uee/pages/pet_services/models/response.dart';
 import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_backend.dart';
@@ -51,9 +52,19 @@ class VetClinicSearchPageState extends State<VetClinicSearchPage> {
     zoom: 14.4746,
   );
 
+  late BitmapDescriptor customMarkerIcon;
+
+  void loadCustomMarkerIcon() async {
+    final ByteData byteData =
+        await rootBundle.load('assets/images/customIconMarker.png');
+    final Uint8List uint8List = byteData.buffer.asUint8List();
+    customMarkerIcon = BitmapDescriptor.fromBytes(uint8List);
+  }
+
   @override
   void initState() {
     super.initState();
+    loadCustomMarkerIcon();
     // Retrieve the current location upon launching the page
     _getCurrentLocation().then(
       (value) {
@@ -67,6 +78,7 @@ class VetClinicSearchPageState extends State<VetClinicSearchPage> {
           infoWindow: InfoWindow(
             title: 'Home', // Set the title text here
           ),
+          icon: customMarkerIcon,
         );
 
         if (mounted) {
@@ -259,10 +271,10 @@ class VetClinicSearchPageState extends State<VetClinicSearchPage> {
       );
     }
 
-    _setMarker(
-      LatLng(lat, lng),
-      "",
-    );
+    // _setMarker(
+    //   LatLng(lat, lng),
+    //   "",
+    // );
   }
 
   void _updateDestination(LatLng point) {

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
 import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_backend.dart';
 import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_search_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_shops/pet_shop_view_location.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class PetShopSinglePage extends StatefulWidget {
   final String documentId;
@@ -19,11 +21,14 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
   String address = "";
   String contactNo = "";
   String websiteLink = "";
+  String docId = "";
 
-  void navigateToPetShopSearchPage() {
+  void navigateToPetShopViewLocationPage(String documentId) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const PetShopSearchPage(),
+        builder: (context) => PetShopViewLocationPage(
+          documentId: documentId,
+        ),
       ),
     );
   }
@@ -69,6 +74,7 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
         .then((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
         setState(() {
+          docId = snapshot.id;
           shopName = snapshot['name'];
           address = snapshot['address'];
           contactNo = snapshot['contact'];
@@ -174,7 +180,21 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
                         'Website Link: ',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text(websiteLink),
+                      GestureDetector(
+                        onTap: () {
+                          _launchURL(
+                              websiteLink); // Call the function to open the website link
+                        },
+                        child: Text(
+                          websiteLink,
+                          style: TextStyle(
+                            color: Colors
+                                .blue, // Change the text color to indicate it's a link
+                            decoration: TextDecoration
+                                .underline, // Add an underline to indicate it's clickable
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -191,7 +211,9 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
                       const SizedBox(
                           width: 16), // Add some space between buttons
                       ElevatedButton(
-                        onPressed: navigateToPetShopSearchPage,
+                        onPressed: () {
+                          navigateToPetShopViewLocationPage(docId);
+                        },
                         child: const Text('View'),
                       ),
                     ],
@@ -207,10 +229,19 @@ class _PetShopSinglePageState extends State<PetShopSinglePage> {
 
   void _launchPhone(String phoneNumber) async {
     final Uri phoneLaunchUri = Uri(scheme: 'tel', path: phoneNumber);
-    if (await canLaunch(phoneLaunchUri.toString())) {
-      await launch(phoneLaunchUri.toString());
+    if (await canLaunchUrlString(phoneLaunchUri.toString())) {
+      await launchUrlString(phoneLaunchUri.toString());
     } else {
       print('Could not launch $phoneLaunchUri');
+    }
+  }
+
+  void _launchURL(String url) async {
+    final Uri websiteLaunchUri = Uri.parse(url);
+    if (await canLaunchUrlString(websiteLaunchUri.toString())) {
+      await launchUrlString(websiteLaunchUri.toString());
+    } else {
+      print('Could not launch $websiteLaunchUri');
     }
   }
 }

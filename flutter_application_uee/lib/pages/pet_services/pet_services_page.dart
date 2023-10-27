@@ -47,7 +47,7 @@ class _PetServicesPageState extends State<PetServicesPage> {
                   const Center(
                     child: ClipRect(
                       child: Image(
-                        image: AssetImage('assets/images/startimg.jpg'),
+                        image: AssetImage('assets/images/pet_store.jpg'),
                         width: 300, // Adjust the width to your preference
                         height: 200, // Adjust the height to your preference
                       ),
@@ -60,14 +60,14 @@ class _PetServicesPageState extends State<PetServicesPage> {
                   const Center(
                     child: ClipRect(
                       child: Image(
-                        image: AssetImage('assets/images/startimg.jpg'),
+                        image: AssetImage('assets/images/vet_clinic.jpg'),
                         width: 300, // Adjust the width to your preference
                         height: 200, // Adjust the height to your preference
                       ),
                     ),
                   ),
                   MyButton(
-                      onTap: navigateToVetClinicViewPage, text: 'Pet Clinics'),
+                      onTap: navigateToVetClinicViewPage, text: 'Vet Clinics'),
                 ],
               ),
             ),
