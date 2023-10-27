@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/pages/add_foster_journey.dart';
 import 'package:flutter_application_uee/pages/foster_profilepage.dart';
 import 'package:flutter_application_uee/pages/my_fosters_page.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_services_page.dart';
 import 'package:flutter_application_uee/pages/register_as_foster.dart';
 import 'package:flutter_application_uee/pages/register_my_pet.dart';
 import './ongoing_reminders.dart';
@@ -28,6 +29,13 @@ class _FosterHomePageState extends State<FosterHomePage> {
       MaterialPageRoute(
           builder: (context) =>
               MyFosterPage()), // Instantiate your AddFosterJorney widget here.
+    );
+  }
+
+  void navigateToPetServicesPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PetServicesPage()),
     );
   }
 
@@ -250,13 +258,18 @@ class _FosterHomePageState extends State<FosterHomePage> {
                           ),
                         ),
                         // Arrow icon at the bottom-right corner
-                        const Positioned(
+                        Positioned(
                           bottom: 10,
                           right: 10,
-                          child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.black,
-                            size: 24,
+                          child: GestureDetector(
+                            onTap: () {
+                              navigateToPetServicesPage();
+                            },
+                            child: const Icon(
+                              Icons.arrow_forward,
+                              color: Colors.black,
+                              size: 24,
+                            ),
                           ),
                         ),
                       ],

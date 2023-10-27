@@ -129,44 +129,58 @@ class _HomePageState extends State<HomePage> {
                               DocumentSnapshot user = fosterUsers![index];
                               String name = user['email'];
 
-                              return Container(
-                                width: 150,
-                                margin: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFECEFFD),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      offset: Offset(0, 4),
-                                      blurRadius: 4,
+                              return InkWell(
+                                  onTap: () {
+                                    String email = user[
+                                        'email']; // Get the email from the DocumentSnapshot
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => FosterDetailsPage(
+                                          email: email,
+                                          currentUser: currentUser,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 150,
+                                    margin: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFECEFFD),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          offset: Offset(0, 4),
+                                          blurRadius: 4,
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 2.0),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 120,
-                                        height: 120,
-                                        decoration: const BoxDecoration(
-                                          color: Color(0xFF0099CD),
-                                        ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 2.0),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: 120,
+                                            height: 120,
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xFF0099CD),
+                                            ),
+                                          ),
+                                          Text(
+                                            name,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        name,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
+                                    ),
+                                  ));
                             },
                           );
                         }
