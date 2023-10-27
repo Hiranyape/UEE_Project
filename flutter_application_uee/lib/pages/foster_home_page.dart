@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/pages/add_foster_journey.dart';
+import 'package:flutter_application_uee/pages/foster_profilepage.dart';
 import 'package:flutter_application_uee/pages/my_fosters_page.dart';
-import 'package:flutter_application_uee/pages/pet_services/pet_services_page.dart';
+import 'package:flutter_application_uee/pages/register_as_foster.dart';
 import 'package:flutter_application_uee/pages/register_my_pet.dart';
+import './ongoing_reminders.dart';
 
 class FosterHomePage extends StatefulWidget {
   const FosterHomePage({super.key});
@@ -14,6 +16,7 @@ class FosterHomePage extends StatefulWidget {
 }
 
 class _FosterHomePageState extends State<FosterHomePage> {
+  String userEmail = "";
   // Sign user out
   void signOut() {
     FirebaseAuth.instance.signOut();
@@ -28,16 +31,15 @@ class _FosterHomePageState extends State<FosterHomePage> {
     );
   }
 
-  void navigateToPetServicesPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              PetServicesPage()), // Instantiate your AddFosterJorney widget here.
-    );
-  }
-
   final currentUser = FirebaseAuth.instance.currentUser;
+
+  void initState() {
+    super.initState();
+    // Access the user's email in initState
+    final currentUser = FirebaseAuth.instance.currentUser;
+    userEmail =
+        currentUser?.email ?? ""; // Get the email if the user is signed in.
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,55 +141,68 @@ class _FosterHomePageState extends State<FosterHomePage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEDF6FB),
-                      borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          offset: Offset(0, 4),
-                          blurRadius: 4,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return OngoingRemindersPage();
+                          },
                         ),
-                      ],
-                    ),
-                    width: 380,
-                    height: 120,
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        OverflowBox(
-                          maxHeight: double.infinity,
-                          minHeight: 0,
-                          alignment: Alignment(-1.0, 1.0),
-                          child: Image.asset('assets/images/cat1.png',
-                              width: 150, height: 150, fit: BoxFit.cover),
-                        ),
-                        const Positioned(
-                          top: 10,
-                          right: 10,
-                          child: Text(
-                            "Check your\nreminders ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEDF6FB),
+                        borderRadius: BorderRadius.circular(15.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            offset: Offset(0, 4),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      width: 380,
+                      height: 120,
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          OverflowBox(
+                            maxHeight: double.infinity,
+                            minHeight: 0,
+                            alignment: Alignment(-1.0, 1.0),
+                            child: Image.asset('assets/images/cat1.png',
+                                width: 150, height: 150, fit: BoxFit.cover),
+                          ),
+                          const Positioned(
+                            top: 10,
+                            right: 10,
+                            child: Text(
+                              "Check your\nreminders ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        // Arrow icon at the bottom-right corner
-                        const Positioned(
-                          bottom: 10,
-                          right: 10,
-                          child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.black,
-                            size: 24,
+                          // Arrow icon at the bottom-right corner
+                          const Positioned(
+                            bottom: 10,
+                            right: 10,
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.black,
+                              size: 24,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
+
                   const SizedBox(height: 10),
                   const Align(
                     alignment: Alignment.centerLeft,
@@ -235,23 +250,56 @@ class _FosterHomePageState extends State<FosterHomePage> {
                           ),
                         ),
                         // Arrow icon at the bottom-right corner
-                        Positioned(
+                        const Positioned(
                           bottom: 10,
                           right: 10,
-                          child: GestureDetector(
-                            onTap: () {
-                              navigateToPetServicesPage();
-                            },
-                            child: const Icon(
-                              Icons.arrow_forward,
-                              color: Colors.black,
-                              size: 24,
-                            ),
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: Colors.black,
+                            size: 24,
                           ),
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  // GestureDetector for adding foster details
+                  SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              FosterProfilePage(fosterEmail: userEmail),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(15.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            offset: Offset(0, 4),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      width: 380,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          "View My Profile",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

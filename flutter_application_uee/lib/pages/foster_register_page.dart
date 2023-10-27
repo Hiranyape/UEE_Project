@@ -6,7 +6,7 @@ import 'package:flutter_application_uee/components/text_feild.dart';
 
 class FosterRegisterPage extends StatefulWidget{
   final Function()? onTap;
-  const FosterRegisterPage({super.key,required this.onTap });
+  const FosterRegisterPage({super.key,required this.onTap, required String fosterEmail });
 
   @override
   State<FosterRegisterPage> createState() =>_FosterRegisterPageState();

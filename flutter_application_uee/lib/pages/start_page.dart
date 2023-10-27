@@ -4,6 +4,7 @@ import 'package:flutter_application_uee/auth/auth.dart';
 import 'package:flutter_application_uee/auth/authFoster.dart';
 import 'package:flutter_application_uee/components/button.dart';
 import 'package:flutter_application_uee/components/text_feild.dart';
+import 'package:flutter_application_uee/pages/register_as_foster.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -34,33 +35,33 @@ class _StartPageState extends State<StartPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-            child: SingleChildScrollView(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      const Image(image: AssetImage('assets/images/logo.png')),
-                      const SizedBox(height: 40),
-                      const ClipOval(
-                        child: Image(
-                          image: AssetImage('assets/images/startimg.jpg'),
-                          width: 400,
-                          height: 350,
-                          fit: BoxFit.cover,
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        const Image(
+                            image: AssetImage('assets/images/logo.png')),
+                        const SizedBox(height: 40),
+                        const ClipOval(
+                          child: Image(
+                            image: AssetImage('assets/images/startimg.jpg'),
+                            width: 400,
+                            height: 350,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 25),
-                      MyButton(
-                          onTap: navigateToFosterLogin,
-                          text: 'Login as a foster'),
-                      const SizedBox(height: 10),
-                      MyButton(
-                          onTap: navigateToUserLogin, text: 'Login as a user'),
-                    ],
-                  ))),
-        )));
+                        const SizedBox(height: 25),
+                        MyButton(
+                            onTap: navigateToFosterLogin,
+                            text: 'Login as a foster'),
+                        const SizedBox(height: 10),
+                        MyButton(
+                            onTap: navigateToUserLogin,
+                            text: 'Login as a user'),
+                      ],
+                    )))));
   }
 }
