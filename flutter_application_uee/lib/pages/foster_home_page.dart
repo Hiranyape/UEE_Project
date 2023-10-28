@@ -196,7 +196,7 @@ class _FosterHomePageState extends State<FosterHomePage> {
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Pet Food Stores",
+                      "Pet Services",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -234,7 +234,7 @@ class _FosterHomePageState extends State<FosterHomePage> {
                             top: 10,
                             right: 10,
                             child: Text(
-                              "Find pet food \nstores ",
+                              "Find Pet Food Stores \nand Vet Clinics ",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20,

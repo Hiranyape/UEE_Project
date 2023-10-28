@@ -341,10 +341,13 @@ class VetClinicSearchPageState extends State<VetClinicSearchPage> {
         final name = result['name'];
         final address = result['vicinity'];
 
-        if (contactNumber == null) {
+        if (contactNumber == null && website == null) {
           contactNumber = "none";
-        } else {
-          website ??= "none";
+          website = "none";
+        } else if (contactNumber == null) {
+          contactNumber = "none";
+        } else if (website == null) {
+          website = "none";
         }
         print("Name: $name");
         print("Address: $address");
@@ -376,10 +379,13 @@ class VetClinicSearchPageState extends State<VetClinicSearchPage> {
         final name = result['name'];
         final address = result['vicinity'];
 
-        if (contactNumber == null) {
+        if (contactNumber == null && website == null) {
           contactNumber = "none";
-        } else {
-          website ??= "none";
+          website = "none";
+        } else if (contactNumber == null) {
+          contactNumber = "none";
+        } else if (website == null) {
+          website = "none";
         }
         print("Name: $name");
         print("Address: $address");
