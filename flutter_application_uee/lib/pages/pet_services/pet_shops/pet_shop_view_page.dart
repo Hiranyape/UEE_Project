@@ -30,6 +30,9 @@ class _PetShopViewPageState extends State<PetShopViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Pet Shop"),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(

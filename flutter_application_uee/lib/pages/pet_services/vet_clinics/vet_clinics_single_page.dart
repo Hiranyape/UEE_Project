@@ -73,13 +73,15 @@ class _VetClinicSinglePageState extends State<VetClinicSinglePage> {
     FirebaseCrudVetClinic.getVetClinicById(widget.documentId)
         .then((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        setState(() {
-          docId = snapshot.id;
-          shopName = snapshot['name'];
-          address = snapshot['address'];
-          contactNo = snapshot['contact'];
-          websiteLink = snapshot['website'];
-        });
+        if (mounted) {
+          setState(() {
+            docId = snapshot.id;
+            shopName = snapshot['name'];
+            address = snapshot['address'];
+            contactNo = snapshot['contact'];
+            websiteLink = snapshot['website'];
+          });
+        }
       }
     }).catchError((error) {
       print("Error fetching pet shop details: $error");
