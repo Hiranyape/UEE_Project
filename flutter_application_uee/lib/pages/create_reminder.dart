@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart'; // Import the FlutterLocalNotificationsPlugin
 import 'my_reminders.dart';
+import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:timezone/timezone.dart' as tz;
+
 
 class CreateReminderPage extends StatefulWidget {
   @override
@@ -129,6 +133,13 @@ class _CreateReminderPageState extends State<CreateReminderPage> {
     String description = descriptionController.text.trim();
 
     if (title.isEmpty || description.isEmpty) {
+      // Show an error message using SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a title and description.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
       return;
     }
 
@@ -142,12 +153,49 @@ class _CreateReminderPageState extends State<CreateReminderPage> {
           'dateTime': selectedDateTime,
         })
         .then((value) {
+          // Calculate the notification time (15 minutes before the selectedDateTime)
+          final notificationTime = selectedDateTime.subtract(Duration(minutes: 15));
+
+          // Schedule the notification
+          scheduleNotification(notificationTime);
+
           Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => MyRemindersPage(),
           ));
         })
-        .catchError((error) {
-          // Handle errors
-        });
+        .catchError((error) {});
+  }
+
+  void scheduleNotification(DateTime notificationTime) async {
+    tzdata.initializeTimeZones(); // Initialize time zones
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    // Define the Android notification details
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'my_notification', 
+      'Scheduled Notifications',
+      importance: Importance.max,
+    );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    // Create a TZDateTime using the timezone package
+    final tz.TZDateTime scheduledTime =
+        tz.TZDateTime.from(notificationTime, tz.local);
+
+    // Schedule the notification
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      0, // Unique ID for the notification
+      'Reminder', // Notification title
+      'Event in 15 minutes', // Notification body
+      scheduledTime, // Scheduled time using TZDateTime
+      platformChannelSpecifics,
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
   }
 }
