@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import './create_reminder.dart'; 
 import './view_reminder.dart';
+import './my_reminders.dart';
 
 class OngoingRemindersPage extends StatelessWidget {
   @override
@@ -213,77 +214,115 @@ class OngoingReminderList extends StatelessWidget {
         }
 
         return ListView.builder(
-          itemCount: filteredReminders.length,
+          itemCount: filteredReminders.length + 1, // Add 1 for the "My Reminders" item
           itemBuilder: (context, index) {
-            var reminder = filteredReminders[index];
-            var title = reminder['title'];
-            var description = reminder['description'];
-            var dateTime = reminder['dateTime'].toDate();
-
-            // Format date and time
-            String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-            String formattedTime = DateFormat('hh:mm a').format(dateTime);
-
-            return GestureDetector(
-              onTap: () {
-                // Navigate to the ViewReminderPage when a reminder is clicked
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ViewReminderPage(reminder: reminder),
+            if (index == filteredReminders.length) {
+              // This is the "My Reminders" item
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyRemindersPage(), 
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align "See All" to the right
+                    children: [
+                      Text(
+                        "My Reminders",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ),
+                      Text(
+                        "See All",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.blue, 
+                          decoration: TextDecoration.underline, 
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 145, 194, 244),
-                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                margin: EdgeInsets.all(8.0),
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                      ),
+              );
+            } else {
+              var reminder = filteredReminders[index];
+              var title = reminder['title'];
+              var description = reminder['description'];
+              var dateTime = reminder['dateTime'].toDate();
+
+              // Format date and time
+              String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+              String formattedTime = DateFormat('hh:mm a').format(dateTime);
+
+              return GestureDetector(
+                onTap: () {
+                  // Navigate to the ViewReminderPage when a reminder is clicked
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ViewReminderPage(reminder: reminder),
                     ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      description,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: const Color.fromARGB(255, 25, 25, 25),
-                      ),
-                    ),
-                    SizedBox(height: 8.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Date: $formattedDate",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Color.fromARGB(255, 48, 43, 43),
-                          ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 145, 194, 244),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  margin: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                          color: const Color.fromARGB(255, 0, 0, 0),
                         ),
-                        Text(
-                          "Time: $formattedTime",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: const Color.fromARGB(255, 48, 43, 43),
-                          ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        description,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: const Color.fromARGB(255, 25, 25, 25),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      SizedBox(height: 8.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Date: $formattedDate",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Color.fromARGB(255, 48, 43, 43),
+                            ),
+                          ),
+                          Text(
+                            "Time: $formattedTime",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: const Color.fromARGB(255, 48, 43, 43),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           },
         );
       },
