@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_uee/pages/add_foster_journey.dart';
 import 'package:flutter_application_uee/pages/foster_profilepage.dart';
 import 'package:flutter_application_uee/pages/my_fosters_page.dart';
 import 'package:flutter_application_uee/pages/pet_services/pet_services_page.dart';
-import 'package:flutter_application_uee/pages/register_as_foster.dart';
-import 'package:flutter_application_uee/pages/register_my_pet.dart';
+
 import './ongoing_reminders.dart';
 
 class FosterHomePage extends StatefulWidget {
@@ -122,23 +119,7 @@ class _FosterHomePageState extends State<FosterHomePage> {
                         ),
                       )),
                   const SizedBox(height: 20),
-                  const Row(
-                    children: [
-                      Text(
-                        "Fosters",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 230),
-                      Text(
-                        "See All",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ],
-                  ),
+                  
                   const SizedBox(height: 10),
                   const Align(
                     alignment: Alignment.centerLeft,

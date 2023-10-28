@@ -1,13 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_uee/components/button.dart';
 import 'package:flutter_application_uee/components/form_feild_text.dart';
-import 'package:flutter_application_uee/components/text_feild.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class RegisterMyPetPage extends StatefulWidget {
   final Function()? onTap;
@@ -168,13 +168,7 @@ class _RegisterMyPetPageState extends State<RegisterMyPetPage> {
               child: Column(
                 children: [
                   const SizedBox(height: 30),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Add New Journey",
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  
                   const SizedBox(height: 20),
                   IconButton(
                     icon: Icon(Icons.add_a_photo),
