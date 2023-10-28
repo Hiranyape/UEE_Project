@@ -25,7 +25,7 @@ class _FosterDetailsPageState extends State<FosterDetailsPage> {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('fosters')
-          .where('email', isEqualTo: widget.email)
+          .where('fosterEmail', isEqualTo: widget.email)
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
@@ -115,8 +115,7 @@ class _FosterDetailsPageState extends State<FosterDetailsPage> {
               backgroundImage: fosterImage.isNotEmpty
                   ? NetworkImage(
                       fosterImage) // Use the actual URL from Firestore
-                  : AssetImage('assets/images/profile_Default.jpg')
-                      as ImageProvider<Object>,
+                  : Image.asset('assets/images/profile_Default.jpg').image,
             ),
           ),
           ListTile(
