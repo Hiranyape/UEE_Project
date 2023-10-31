@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_uee/auth/auth.dart';
 import 'package:flutter_application_uee/auth/login_or_register.dart';
-import 'package:flutter_application_uee/firebase_options.dart';
+import 'package:flutter_application_uee/firebase_options.dart'; 
 import 'package:flutter_application_uee/pages/start_page.dart';
 import 'package:flutter_application_uee/pages/user_login_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
