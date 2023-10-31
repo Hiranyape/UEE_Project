@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_uee/pages/add_foster_journey.dart';
 import 'package:flutter_application_uee/pages/foster_profilepage.dart';
 import 'package:flutter_application_uee/pages/my_fosters_page.dart';
-import 'package:flutter_application_uee/pages/register_as_foster.dart';
-import 'package:flutter_application_uee/pages/register_my_pet.dart';
+import 'package:flutter_application_uee/pages/pet_services/pet_services_page.dart';
+
 import './ongoing_reminders.dart';
 
 class FosterHomePage extends StatefulWidget {
@@ -28,6 +26,13 @@ class _FosterHomePageState extends State<FosterHomePage> {
       MaterialPageRoute(
           builder: (context) =>
               MyFosterPage()), // Instantiate your AddFosterJorney widget here.
+    );
+  }
+
+  void navigateToPetServicesPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PetServicesPage()),
     );
   }
 
@@ -114,23 +119,7 @@ class _FosterHomePageState extends State<FosterHomePage> {
                         ),
                       )),
                   const SizedBox(height: 20),
-                  const Row(
-                    children: [
-                      Text(
-                        "Fosters",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 230),
-                      Text(
-                        "See All",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ],
-                  ),
+                  
                   const SizedBox(height: 10),
                   const Align(
                     alignment: Alignment.centerLeft,
@@ -207,59 +196,64 @@ class _FosterHomePageState extends State<FosterHomePage> {
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Pet Food Stores",
+                      "Pet Services",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                   const SizedBox(height: 50),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEDF6FB),
-                      borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          offset: Offset(0, 4),
-                          blurRadius: 4,
-                        ),
-                      ],
-                    ),
-                    width: 380,
-                    height: 120,
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        OverflowBox(
-                          maxHeight: double.infinity,
-                          minHeight: 0,
-                          alignment: const Alignment(-1.0, 0.8),
-                          child: Image.asset('assets/images/food1.png',
-                              width: 150, height: 150, fit: BoxFit.cover),
-                        ),
-                        const Positioned(
-                          top: 10,
-                          right: 10,
-                          child: Text(
-                            "Find pet food \nstores ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: () {
+                      navigateToPetServicesPage();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEDF6FB),
+                        borderRadius: BorderRadius.circular(15.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            offset: Offset(0, 4),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      width: 380,
+                      height: 120,
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          OverflowBox(
+                            maxHeight: double.infinity,
+                            minHeight: 0,
+                            alignment: const Alignment(-1.0, 0.8),
+                            child: Image.asset('assets/images/food1.png',
+                                width: 150, height: 150, fit: BoxFit.cover),
+                          ),
+                          const Positioned(
+                            top: 10,
+                            right: 10,
+                            child: Text(
+                              "Find Pet Food Stores \nand Vet Clinics ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        // Arrow icon at the bottom-right corner
-                        const Positioned(
-                          bottom: 10,
-                          right: 10,
-                          child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.black,
-                            size: 24,
+                          // Arrow icon at the bottom-right corner
+                          const Positioned(
+                            bottom: 10,
+                            right: 10,
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.black,
+                              size: 24,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   // GestureDetector for adding foster details
