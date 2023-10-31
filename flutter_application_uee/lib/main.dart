@@ -23,12 +23,12 @@ class MyApp extends StatelessWidget {
       home: StartPage(),
       supportedLocales: L10n.all,
       locale: Locale('en'),
-      localizationsDelegates: const {
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      },
+      // localizationsDelegates: const {
+      //   AppLocalizations.delegate,
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // },
     );
   }
 }
