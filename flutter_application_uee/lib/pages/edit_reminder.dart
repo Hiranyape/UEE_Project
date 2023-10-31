@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
-import 'my_reminders.dart'; // Import My Reminders page
-import 'package:intl/intl.dart'; // Import the intl package
+import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'my_reminders.dart'; 
+import 'package:intl/intl.dart'; 
 
 class EditReminderPage extends StatefulWidget {
   final QueryDocumentSnapshot<Object?> reminder;
@@ -70,7 +70,13 @@ class _EditReminderPageState extends State<EditReminderPage> {
     String description = descriptionController.text.trim();
 
     if (title.isEmpty || description.isEmpty) {
-      // Show an error message or dialog to inform the user that fields are empty
+      // Show an error message using SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a title and description.'),
+          duration: Duration(seconds: 2), 
+        ),
+      );
       return;
     }
 
@@ -78,7 +84,7 @@ class _EditReminderPageState extends State<EditReminderPage> {
         FirebaseFirestore.instance.collection('reminders');
 
     reminders
-        .doc(widget.reminder.id) // Use the existing document ID
+        .doc(widget.reminder.id) 
         .update({
           'title': title,
           'description': description,
@@ -91,7 +97,6 @@ class _EditReminderPageState extends State<EditReminderPage> {
           ));
         })
         .catchError((error) {
-          // Handle errors, e.g., display an error message to the user
         });
   }
 

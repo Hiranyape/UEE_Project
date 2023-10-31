@@ -27,7 +27,7 @@ class _UpdateFosterPageState extends State<UpdateFosterPage> {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('fosters')
-          .where('email', isEqualTo: widget.fosterEmail)
+          .where('fosterEmail', isEqualTo: widget.fosterEmail)
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
