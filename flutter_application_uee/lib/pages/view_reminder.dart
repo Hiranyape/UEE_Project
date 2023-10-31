@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'edit_reminder.dart'; // Import the EditReminderPage here
+import 'edit_reminder.dart'; 
 
 class ViewReminderPage extends StatelessWidget {
   final QueryDocumentSnapshot<Object?> reminder;
